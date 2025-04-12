@@ -45,7 +45,7 @@ A Python-based GUI application that fetches historical stock market data and vis
 - git clone https://github.com/Mahoskian/CIS298-Final-Project.git
 - cd CIS298-Final-Project
 #### Create & activate a virtual environment:
-- python -3.13 -m venv myenv
+- python -3.12 -m venv myenv
 #### Enter Venv - On Windows:
 - myenv\Scripts\activate
 #### Install dependencies:
