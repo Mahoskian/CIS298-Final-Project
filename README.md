@@ -15,7 +15,7 @@ A Python-based GUI application that fetches historical stock market data and vis
   - Simple Moving Average (SMA)
   - Exponential Moving Average (EMA)
   - Volatility & Daily Returns (coming soon!)
-- Clean GUI built with `Tkinter`
+- GUI built with `Tkinter`
 - Compare multiple stock tickers
 - Export graphs to PNG & data to CSV
 
