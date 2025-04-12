@@ -1,4 +1,4 @@
-# CIS298-Final-Project
+# CIS298 - Python : Group 9 : Final Project
 CIS298 Intro to Python - 2025 (Final Project)
 
 # Interactive Stock Price Visualizer & Analyzer
