@@ -15,7 +15,7 @@ A Python-based GUI application that fetches historical stock market data and vis
   - Simple Moving Average (SMA)
   - Exponential Moving Average (EMA)
   - Volatility & Daily Returns (coming soon!)
-- Clean GUI built with `Tkinter`
+- GUI built with `Tkinter`
 - Compare multiple stock tickers
 - Export graphs to PNG & data to CSV
 
@@ -41,19 +41,15 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Installation
 
-Clone the repo:
+#### Clone the repo:
 - git clone https://github.com/Mahoskian/CIS298-Final-Project.git
 - cd CIS298-Final-Project
-
-Create & activate a virtual environment:
+#### Create & activate a virtual environment:
 - python -3.13 -m venv myenv
-
-Enter Venv - On Windows:
+#### Enter Venv - On Windows:
 - myenv\Scripts\activate
-
-Install dependencies:
+#### Install dependencies:
 - pip install -r requirements.txt
-
-Run the application:
+#### Run the application:
 - python main.py
 
