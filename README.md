@@ -1,9 +1,12 @@
-# CIS298 - Python : Group 9 : Final Project
-CIS298 Intro to Python - 2025 (Final Project)
+# CIS298 - Python : Group 9 - Final Project : Winter 2025
 
 # Interactive Stock Price Visualizer & Analyzer
 
 A Python-based GUI application that fetches historical stock market data and visualizes it using interactive, real-time graphs. Built with Plotly for dynamic charts and Tkinter for a modern interface, allows users to explore stock performance, compare companies, and apply basic financial analytics.
+
+---
+
+## Authors & Contributions
 
 ---
 
