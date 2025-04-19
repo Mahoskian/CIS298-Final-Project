@@ -18,6 +18,7 @@ def on_fetch():
     # Fetch and process the data
     df = data_handler.process_stock_data(ticker, start, end)
     df_dict = {ticker: df}
+    print(df_dict)
 
     # Determine which overlays to show based on checkboxes
     sma = ui.check1.instate(['selected'])
@@ -36,7 +37,6 @@ def on_fetch():
     # Display the figure
     if fig is not None:
         fig.show()
-
 
 if __name__ == "__main__":
     # Bind Fetch button and start UI

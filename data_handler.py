@@ -1,3 +1,4 @@
+from typing import List, Dict, Optional
 import yfinance as yf
 import pandas as pd
 
@@ -15,23 +16,30 @@ def get_data_from_start(ticker: str, start: str) -> pd.DataFrame:
     df = yf.download(ticker, start=start)
     return df.reset_index().dropna()
 
-def add_metrics(df: pd.DataFrame) -> pd.DataFrame:
-    df['7_day_MA'] = df['Close'].rolling(window=7).mean()
-    df['30_day_MA'] = df['Close'].rolling(window=30).mean()
-    df['Daily_Return'] = df['Close'].pct_change()
-    df['Volatility_7d'] = df['Daily_Return'].rolling(window=7).std()
+def add_metrics(
+  df: pd.DataFrame,
+  sma_windows: List[int]  = [7,30],
+  ema_windows: List[int]  = [7,30],
+  vol_windows: List[int]  = [7]
+) -> pd.DataFrame:
+    for w in sma_windows:
+        df[f"SMA_{w}"] = df["Close"].rolling(w).mean()
+    for w in ema_windows:
+        df[f"EMA_{w}"] = df["Close"].ewm(span=w, adjust=False).mean()
+    for w in vol_windows:
+        ret = df["Close"].pct_change()
+        df[f"Vol_{w}"] = ret.rolling(w).std() * (252**0.5)
     return df
 
-def process_stock_data(ticker: str, start: str, end: str = None, mode: str = 'history') -> pd.DataFrame:
-    """
-    mode: 'realtime', 'history', or 'from_start'
-    """
-    if mode == 'realtime':
-        df = get_realtime_data(ticker)
-    elif mode == 'from_start':
-        df = get_data_from_start(ticker, start)
-    else:
-        df = get_data_between_dates(ticker, start, end)
+def process_stock_data(
+  ticker: str,
+  start: str,
+  end: Optional[str] = None,
+  mode: str = "history",
+  sma_windows: List[int] = [7,30],
+  ema_windows: List[int] = [7,30],
+  vol_windows: List[int] = [7]
+) -> pd.DataFrame:
+    # …fetch df…
+    return add_metrics(df, sma_windows, ema_windows, vol_windows)
 
-    df = add_metrics(df)
-    return df
