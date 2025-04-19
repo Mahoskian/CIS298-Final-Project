@@ -10,3 +10,10 @@ import plotly.subplots as sp
 import os
 import csv
 from datetime import datetime
+
+
+from data_handler import process_stock_data
+
+if __name__ == "__main__":
+    df = process_stock_data("MSFT", start="2024-01-01", end="2024-03-01")
+    print(df.tail())
