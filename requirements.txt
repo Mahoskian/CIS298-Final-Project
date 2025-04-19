@@ -1,3 +1,4 @@
+babel==2.17.0
 beautifulsoup4==4.13.3
 certifi==2025.1.31
 charset-normalizer==3.4.1
@@ -16,6 +17,7 @@ pytz==2025.2
 requests==2.32.3
 six==1.17.0
 soupsieve==2.6
+tkcalendar==1.6.1
 typing_extensions==4.13.2
 tzdata==2025.2
 urllib3==2.4.0
