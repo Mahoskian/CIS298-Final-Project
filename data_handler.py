@@ -6,7 +6,7 @@ import pandas as pd
 
 def get_realtime_data(ticker: str) -> pd.DataFrame:
     stock = yf.Ticker(ticker)
-    df = stock.history(period="1d", interval="1m")  # 1-minute interval for the current day
+    df = stock.history(period="1d", interval="1m") 
     return df.reset_index().dropna()
 
 def get_data_between_dates(ticker: str, start: str, end: str) -> pd.DataFrame:
