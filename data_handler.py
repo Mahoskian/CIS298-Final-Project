@@ -1,3 +1,4 @@
+from typing import List, Dict, Optional
 import yfinance as yf
 import pandas as pd
 
@@ -23,9 +24,7 @@ def add_metrics(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def process_stock_data(ticker: str, start: str, end: str = None, mode: str = 'history') -> pd.DataFrame:
-    """
-    mode: 'realtime', 'history', or 'from_start'
-    """
+    # mode: 'realtime', 'history', or 'from_start'
     if mode == 'realtime':
         df = get_realtime_data(ticker)
     elif mode == 'from_start':
@@ -35,3 +34,4 @@ def process_stock_data(ticker: str, start: str, end: str = None, mode: str = 'hi
 
     df = add_metrics(df)
     return df
+
