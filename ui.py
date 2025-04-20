@@ -43,17 +43,15 @@ dateStart = tkcalendar.DateEntry(right_frame)
 dateEnd = tkcalendar.DateEntry(right_frame)
 
 ticker_frame = ttk.Frame(right_frame)
-
-
 max_tickers = 5
 ticker_count = 0
-ticker_rows = []                  # keep (row_frame, plus_button) pairs
+ticker_rows = []
 
 def add_ticker_row():
     global ticker_count
     if ticker_count >= max_tickers:
         return
-    # remove the old '+' from the previous row
+
     if ticker_rows:
         _, prev_btn = ticker_rows[-1]
         prev_btn.destroy()
@@ -69,26 +67,23 @@ def add_ticker_row():
     ticker_rows.append((row, btn_plus))
     ticker_count += 1
 
-# start with one row
 add_ticker_row()
-
 
 b = tk.Button(right_frame, text="Fetch", width=10,background="dark green")
 for w in (label2, dateStart, dateEnd,ticker_frame, b):
     w.pack(fill="x", pady=5)
 
 chk_frame = ttk.Frame(root, padding=5)
-chk_frame.grid(row=1, column=0, sticky="ne", padx=5, pady=5)
+chk_frame.grid(row=1, column=0, sticky="ne", padx=2, pady=65)
 check1 = ttk.Checkbutton(chk_frame, text="SMA")
 check2 = ttk.Checkbutton(chk_frame, text="EMA")
 check3 = ttk.Checkbutton(chk_frame, text="Volatility")
 
 for chk in (check1, check2, check3):
-    chk.pack(anchor="ne", pady=2)
+    chk.pack(fill="x",anchor="w", pady=1)
 
 
 # Dropdown for export
-
 
 filetype=["CSV","PDF","PNG","JSON"]
 
