@@ -1,5 +1,5 @@
 # 04/21/2025
-# Soham Naik, Michael WR, Dilraj
+# Soham Naik, Michael Asman, Dilraj Dhillon
 # Check /references for the original code -> Ported into this file for ease of assembly.
 # This script is a GUI application for fetching and visualizing stock data using yfinance.
 
