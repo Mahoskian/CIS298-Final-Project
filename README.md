@@ -26,7 +26,7 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Demo Video
 
-![demo-video](documents/DEMO.mkv)
+[▶️ Watch the Demo!](https://youtu.be/aHADO-xjKzM)
 
 ---
 
