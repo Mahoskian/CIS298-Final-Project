@@ -13,9 +13,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 MIN_DATE = date(2000, 1, 1)
 TODAY = datetime.today().date()
 MIN_SPAN_DAYS = 7
-METRICS = [
-    'Close', 'SMA', 'EMA', 'Volatility', 'Volume'
-]
+METRICS = ['Close', 'SMA', 'EMA', 'Volatility', 'Volume']
 
 class StockApp:
     def __init__(self, root):
