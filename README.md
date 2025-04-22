@@ -8,9 +8,9 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Authors & Contributions
 
-- Soham Naik: Visualization
-- Dilraj Dhillon: GUI
-- Michael Asman: Data Handling
+- Soham Naik: Graphs - MatplotLib
+- Dilraj Dhillon: GUI - TKinter
+- Michael Asman: Data Requests - yFinance
 
 ---
 
