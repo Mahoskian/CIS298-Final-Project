@@ -13,7 +13,7 @@ A Python-based GUI application that fetches historical stock market data and vis
 ## Features
 
 - Fetch historical stock data using `yfinance`
-- Interactive Plotly graphs with zoom, hover, and pan
+- Visual MatplotLib graphs
 - Analytics overlays:
   - Simple Moving Average (SMA)
   - Exponential Moving Average (EMA)
@@ -26,7 +26,7 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Demo Video
 
-![demo-video](assets/demo.gif)
+![demo-video](documents/DEMO.mkv)
 
 ---
 
@@ -36,9 +36,9 @@ A Python-based GUI application that fetches historical stock market data and vis
 |----------------|-------------------|
 | Stock Data      | [`yfinance`](https://pypi.org/project/yfinance/) |
 | Data Handling   | [`pandas`](https://pandas.pydata.org/), [`datetime`](https://docs.python.org/3/library/datetime.html) |
-| Visualization   | [`plotly`](https://github.com/plotly/plotly.py) |
+| Visualization   | [`matplotlib`](https://matplotlib.org/) |
 | GUI             | [`tkinter`](https://docs.python.org/3/library/tk.html) |
-| Export Options  | [`plotly.io`](https://plotly.com/python-api-reference/generated/plotly.io.html), [`os`](https://docs.python.org/3/library/os.html), [`csv`](https://docs.python.org/3/library/csv.html) |
+| Export Options  | [`os`](https://docs.python.org/3/library/os.html), [`csv`](https://docs.python.org/3/library/csv.html) |
 
 ---
 
@@ -54,5 +54,5 @@ A Python-based GUI application that fetches historical stock market data and vis
 #### Install dependencies:
 - pip install -r requirements.txt
 #### Run the application:
-- python main.py
+- python app.py
 
