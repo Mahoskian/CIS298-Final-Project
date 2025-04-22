@@ -8,6 +8,10 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Authors & Contributions
 
+- Soham Naik: Graphs - MatplotLib
+- Dilraj Dhillon: GUI - TKinter
+- Michael Asman: Data Requests - yFinance
+
 ---
 
 ## Features
