@@ -1,3 +1,8 @@
+# 04/21/2025
+# Soham Naik, Michael WR, Dilraj
+# Check /references for the original code -> Ported into this file for ease of assembly.
+# This script is a GUI application for fetching and visualizing stock data using yfinance.
+
 import os
 import json
 from datetime import datetime, timedelta, date
@@ -9,7 +14,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Constants
+# Constants for date limits and available metrics
 MIN_DATE = date(2000, 1, 1)
 TODAY = datetime.today().date()
 MIN_SPAN_DAYS = 7
@@ -17,10 +22,12 @@ METRICS = ['Close', 'SMA', 'EMA', 'Volatility', 'Volume']
 
 
 class DataHandler:
+    # Manages fetching and processing stock data
     def __init__(self):
         self.data = {}
 
     def fetch(self, tickers):
+        # Download history and compute indicators for each ticker
         colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
         color_map = {t: colors[i % len(colors)] for i, t in enumerate(tickers)}
         self.data.clear()
@@ -31,8 +38,10 @@ class DataHandler:
             if df is None or df.empty:
                 infos.append(f"No data for {t}\n")
                 continue
+            # Calculate rolling and exponential moving averages
             df['SMA'] = df['Close'].rolling(20).mean()
             df['EMA'] = df['Close'].ewm(span=20, adjust=False).mean()
+            # Calculate volatility as rolling std of returns
             df['Volatility'] = df['Close'].pct_change().rolling(20).std()
             self.data[t] = df
             info = obj.info or {}
@@ -41,6 +50,7 @@ class DataHandler:
 
     @staticmethod
     def _format_info(ticker, info):
+        # Build a summary string of company info
         return (
             f"=== {ticker} ===\n"
             f"Name: {info.get('longName','N/A')}\n"
@@ -54,17 +64,20 @@ class DataHandler:
 
 
 class PlotManager:
+    # Handles creation and updating of plot tabs
     def __init__(self, notebook):
         self.notebook = notebook
         self.tabs = {}
         self._create_tabs()
 
     def _create_tabs(self):
+        # Set up an INFO tab for text summaries
         info_frame = ttk.Frame(self.notebook)
         info_text = tk.Text(info_frame, wrap='word', state='disabled')
         info_text.pack(fill='both', expand=True)
         self.tabs['INFO'] = {'frame': info_frame, 'widget': info_text}
         self.notebook.add(info_frame, text='INFO')
+        # Create a tab for each metric with its own matplotlib canvas
         for metric in METRICS:
             frame = ttk.Frame(self.notebook)
             fig = plt.Figure(); fig.subplots_adjust(left=0.3)
@@ -75,11 +88,13 @@ class PlotManager:
             self.notebook.add(frame, text=metric)
 
     def update(self, infos, data_values, color_map, start, end):
+        # Refresh INFO tab with textual data
         widget = self.tabs['INFO']['widget']
         widget.config(state='normal')
         widget.delete('1.0', tk.END)
         widget.insert(tk.END, ''.join(infos))
         widget.config(state='disabled')
+        # Redraw each metric's chart with the new data slice
         for metric, tab in self.tabs.items():
             if metric == 'INFO':
                 continue
@@ -96,6 +111,7 @@ class PlotManager:
 
 
 class GUIManager:
+    # Builds and manages all GUI widgets
     def __init__(self, root, controller):
         self.root = root
         self.ctrl = controller
@@ -105,6 +121,7 @@ class GUIManager:
         self._bind_events()
 
     def _config_root(self):
+        # Configure main window properties and apply dark theme if available
         self.root.title("Stock Data Viewer")
         try:
             self.root.state('zoomed')
@@ -120,6 +137,7 @@ class GUIManager:
             pass
 
     def _create_widgets(self):
+        # Instantiate all the widgets needed in the interface
         self.title_lbl = ttk.Label(self.root, text="Stock Data Viewer", font=(None, 16))
         self.ticker_frame = ttk.LabelFrame(self.root, text="Tickers")
         self.ticker_vars = []
@@ -143,6 +161,7 @@ class GUIManager:
         self.notebook = ttk.Notebook(self.root)
 
     def _layout_widgets(self):
+        # Position all widgets using grid and pack geometry managers
         self.title_lbl.grid(row=0, column=0, columnspan=4, sticky='w', padx=10, pady=5)
         self.ticker_frame.grid(row=1, column=0, columnspan=4, sticky='we', padx=10, pady=5)
         ttk.Label(self.date_frame, text="Range -> Start Date:").pack(side='left')
@@ -157,11 +176,13 @@ class GUIManager:
         self.notebook.grid(row=4, column=0, columnspan=4, sticky='nsew', padx=10, pady=5)
 
     def _add_ticker(self):
+        # Add a new ticker entry field
         var = tk.StringVar()
         self.ticker_vars.append(var)
         self._refresh_tickers()
 
     def _refresh_tickers(self):
+        # Rebuild ticker entry row to show + and - buttons correctly
         for w in self.ticker_frame.winfo_children():
             w.destroy()
         for i, var in enumerate(self.ticker_vars):
@@ -175,22 +196,27 @@ class GUIManager:
                            command=self.ctrl.on_add_ticker).grid(row=0, column=i*2+1, padx=2)
 
     def _bind_events(self):
+        # Hook date pickers to dropdown and change events
         for cal in (self.start_cal, self.end_cal):
             cal.bind('<Button-1>', lambda e, c=cal: c.drop_down())
             cal.bind('<<DateEntrySelected>>', lambda e: self.ctrl.on_date_change(e))
 
     def get_tickers(self):
+        # Return list of cleaned ticker symbols
         return [v.get().strip().upper() for v in self.ticker_vars if v.get().strip()]
 
     def get_date_range(self):
+        # Return formatted start and end dates
         return (self.start_cal.get_date().strftime('%Y-%m-%d'),
                 self.end_cal.get_date().strftime('%Y-%m-%d'))
 
     def get_export_format(self):
+        # Return currently selected export format
         return self.export_combo.get()
 
 
 class StockApp:
+    # Orchestrates data, GUI, and plotting components
     def __init__(self, root):
         self.data_handler = DataHandler()
         self.gui = GUIManager(root, self)
@@ -199,13 +225,16 @@ class StockApp:
         self.color_map = {}
 
     def on_add_ticker(self):
+        # Delegate to GUI to add a ticker field
         self.gui._add_ticker()
 
     def on_remove_ticker(self, var):
+        # Remove a ticker field and refresh layout
         self.gui.ticker_vars.remove(var)
         self.gui._refresh_tickers()
 
     def on_date_change(self, event):
+        # Enforce minimum span between dates and update plot if needed
         start_date = self.gui.start_cal.get_date()
         end_date = self.gui.end_cal.get_date()
         if event.widget == self.gui.end_cal:
@@ -221,6 +250,7 @@ class StockApp:
             self.plot_mgr.update(self.infos, self.data_handler.data, self.color_map, start, end)
 
     def on_fetch(self):
+        # Fetch data for entered tickers and update plots
         tickers = self.gui.get_tickers()
         if not tickers:
             messagebox.showwarning("No Tickers", "Enter at least one ticker.")
@@ -230,6 +260,7 @@ class StockApp:
         self.plot_mgr.update(self.infos, self.data_handler.data, self.color_map, start, end)
 
     def on_export(self):
+        # Export current data or chart in selected format
         fmt = self.gui.get_export_format()
         start, end = self.gui.get_date_range()
         ticks = self.gui.get_tickers()
@@ -264,6 +295,7 @@ class StockApp:
 
 
 if __name__ == '__main__':
+    # Entry point: create the main window and run the app
     root = tk.Tk()
     app = StockApp(root)
     root.mainloop()
