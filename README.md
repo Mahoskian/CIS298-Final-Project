@@ -26,7 +26,12 @@ A Python-based GUI application that fetches historical stock market data and vis
 
 ## Demo Video
 
-![demo-video](documents/DEMO.mkv)
+<video controls width="600">
+  <source
+    src="https://raw.githubusercontent.com/Mahoskian/CIS298-Final-Project/main/documents/DEMO.mp4"
+    type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ---
 
